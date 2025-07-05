@@ -32,7 +32,8 @@ appsettings.json
 # Dependency directories
 node_modules/
 wwwroot/lib/
-
+publish
+update.sql
 # OS
 .DS_Store
 Thumbs.db
