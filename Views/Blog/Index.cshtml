@@ -1,0 +1,28 @@
+@model IEnumerable<ahrenburg.city.Models.BlogPost>
+@{
+    ViewData["Title"] = "Blog";
+}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <h1 class="mb-4">Blog</h1>
+        @if (User.Identity.IsAuthenticated && User.Identity.Name == "thorstenkloehn@gmail.com")
+        {
+            <a class="btn btn-primary mb-4" asp-action="Create">Neuen Artikel erstellen</a>
+        }
+        @foreach (var post in Model)
+        {
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title">@Html.DisplayFor(m => post.Title)</h2>
+                    <p class="card-text text-muted small mb-2">Veröffentlicht am @post.CreatedAt.ToLocalTime()</p>
+                    <p class="card-text">@((post.Content.Length > 200 ? post.Content.Substring(0, 200) + "..." : post.Content))</p>
+                    <a class="btn btn-outline-primary btn-sm" asp-action="Details" asp-route-id="@post.Id">Weiterlesen</a>
+                    @if (User.Identity.IsAuthenticated && User.Identity.Name == "thorstenkloehn@gmail.com")
+                    {
+                        <a class="btn btn-outline-secondary btn-sm ms-2" asp-action="Edit" asp-route-id="@post.Id">Bearbeiten</a>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

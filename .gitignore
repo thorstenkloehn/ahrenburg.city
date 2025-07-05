@@ -1,0 +1,45 @@
+# Build
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Database
+app.db
+*.sqlite
+*.mdf
+*.ldf
+*.db
+*.bak
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Secrets
+appsettings.Development.json
+secrets.json
+appsettings.json
+# Dependency directories
+node_modules/
+wwwroot/lib/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Python virtual env
+venv/
