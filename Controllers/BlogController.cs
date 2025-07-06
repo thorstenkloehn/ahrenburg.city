@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using ahrenburg.city.Data;
 using ahrenburg.city.Models;
+using Markdig;
+using Microsoft.EntityFrameworkCore;
 
 namespace ahrenburg.city.Controllers
 {
@@ -27,7 +29,10 @@ namespace ahrenburg.city.Controllers
         // GET: /Blog
         public IActionResult Index()
         {
-            var posts = _context.BlogPosts.OrderByDescending(b => b.CreatedAt).ToList();
+            var posts = _context.BlogPosts
+                .AsNoTracking() // Performance: keine Change-Tracking-Overhead
+                .OrderByDescending(b => b.CreatedAt)
+                .ToList();
             return View(posts);
         }
 
@@ -36,6 +41,8 @@ namespace ahrenburg.city.Controllers
         {
             var post = _context.BlogPosts.FirstOrDefault(b => b.Id == id);
             if (post == null) return NotFound();
+            // Markdown zu HTML konvertieren
+            post.Content = Markdown.ToHtml(post.Content ?? "");
             return View(post);
         }
 
@@ -92,6 +99,32 @@ namespace ahrenburg.city.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(post);
+        }
+
+        // GET: /Blog/Delete/5
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null || user.Email != _adminEmail) return Forbid();
+            var post = _context.BlogPosts.FirstOrDefault(b => b.Id == id);
+            if (post == null) return NotFound();
+            return View(post);
+        }
+
+        // POST: /Blog/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null || user.Email != _adminEmail) return Forbid();
+            var post = _context.BlogPosts.FirstOrDefault(b => b.Id == id);
+            if (post == null) return NotFound();
+            _context.BlogPosts.Remove(post);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

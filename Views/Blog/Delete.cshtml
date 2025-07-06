@@ -1,0 +1,15 @@
+@model ahrenburg.city.Models.BlogPost
+@{
+    ViewData["Title"] = "Blogartikel löschen";
+}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <h1 class="mb-3">Blogartikel löschen</h1>
+        <div class="alert alert-danger">Möchtest du den Artikel <strong>@Model.Title</strong> wirklich löschen?</div>
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger">Löschen</button>
+            <a asp-action="Index" class="btn btn-secondary ms-2">Abbrechen</a>
+        </form>
+    </div>
+</div>

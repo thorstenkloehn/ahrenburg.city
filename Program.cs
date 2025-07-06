@@ -33,6 +33,13 @@ else
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+    {
+        ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=604800"); // 7 Tage Caching
+    }
+});
 app.UseRouting();
 
 app.UseAuthorization();

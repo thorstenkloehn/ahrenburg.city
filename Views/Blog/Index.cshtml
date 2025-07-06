@@ -15,7 +15,7 @@
                 <div class="card-body">
                     <h2 class="card-title">@Html.DisplayFor(m => post.Title)</h2>
                     <p class="card-text text-muted small mb-2">Veröffentlicht am @post.CreatedAt.ToLocalTime()</p>
-                    <p class="card-text">@((post.Content.Length > 200 ? post.Content.Substring(0, 200) + "..." : post.Content))</p>
+                    <p class="card-text">@Html.Raw(post.ContentHtml.Length > 200 ? post.ContentHtml.Substring(0, 200) + "..." : post.ContentHtml)</p>
                     <a class="btn btn-outline-primary btn-sm" asp-action="Details" asp-route-id="@post.Id">Weiterlesen</a>
                     @if (User.Identity.IsAuthenticated && User.Identity.Name == "thorstenkloehn@gmail.com")
                     {
