@@ -18,7 +18,12 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Privacy()
+    public IActionResult Impressum()
+    {
+        return View();
+    }
+
+  public IActionResult Datenschutz()
     {
         return View();
     }
