@@ -10,8 +10,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options => {
+    options.SignIn.RequireConfirmedAccount = false;
+    options.SignIn.RequireConfirmedEmail = false;
+    })
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// Selbstregistrierung deaktivieren
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.User.RequireUniqueEmail = true;
+});
 builder.Services.AddControllersWithViews();
 using (var scope = builder.Services.BuildServiceProvider().CreateScope())
 {
@@ -42,6 +51,7 @@ app.UseStaticFiles(new StaticFileOptions
 });
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

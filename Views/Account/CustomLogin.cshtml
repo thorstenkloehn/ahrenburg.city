@@ -1,0 +1,25 @@
+@model ahrenburg.city.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Anmeldung";
+}
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <form asp-action="CustomLogin" method="post">
+            <h2>Anmeldung</h2>
+            <hr />
+            @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+            {
+                <div class="alert alert-danger">@Model.ErrorMessage</div>
+            }
+            <div class="mb-3">
+                <label for="Email" class="form-label">E-Mail-Adresse</label>
+                <input type="email" class="form-control" id="Email" name="Email" required />
+            </div>
+            <div class="mb-3">
+                <label for="Password" class="form-label">Passwort</label>
+                <input type="password" class="form-control" id="Password" name="Password" required />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Anmelden</button>
+        </form>
+    </div>
+</div>

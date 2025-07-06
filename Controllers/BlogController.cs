@@ -16,7 +16,7 @@ namespace ahrenburg.city.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
-        private readonly string _adminEmail;
+        private readonly string? _adminEmail;
 
         public BlogController(ApplicationDbContext context, UserManager<IdentityUser> userManager, IConfiguration configuration)
         {
